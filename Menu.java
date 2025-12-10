@@ -19,7 +19,7 @@ class Menu extends Program{
         }
     }
 
-    void afficherMenu(){
+    void afficherMenu() {
         println("1.Jouer\n2.Aide\n3.Option");
     }
 
