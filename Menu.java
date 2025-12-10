@@ -53,3 +53,19 @@ class Menu extends Program{
         afficherMenu();
     }
 }
+
+class Plateau {
+    void remplacer(String plateau, int _case, String _contenu) {
+        // TODO Boucle sur plateau; quand on trouve un cas où plateau[i] + plateau[i+1] == _case (ou == "0"+_case si (_case <= 9)), on s'arrête et on garde l'index
+        // Ensuite on utilisera l'index pour remplacer avec _contenu
+    }
+}
+
+class Jeu {
+    boolean fini = false;
+    void jouer() {
+        while (!fini) {
+
+        }
+    }
+}
