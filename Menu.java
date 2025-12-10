@@ -1,5 +1,5 @@
 class Menu extends Program{
-    void aideMenu(){
+    void aideMenu() {
         println("1.Cases\n2.Combat\n3.Bonus");
     }
 
@@ -13,8 +13,8 @@ class Menu extends Program{
         do{
             print("Veuillez choisir un nombre entre 1 et 3 : ");
             saisie = readInt();
-        }while(saisie<1 || saisie>3);
-        if(saisie==1){
+        } while(saisie<1 || saisie>3);
+        if (saisie==1) {
             aideCases();
         }
     }
@@ -29,8 +29,8 @@ class Menu extends Program{
         do{
             print("Veuillez choisir un nombre entre 1 et 3 : ");
             saisie = readInt();
-        }while(saisie<1 || saisie>3);
-        if (saisie==2){
+        } while (saisie<1 || saisie>3);
+        if (saisie==2) {
             aide();
         }
     }
