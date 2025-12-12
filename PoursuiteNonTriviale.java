@@ -53,25 +53,21 @@ class PoursuiteNonTriviale extends Program {
 
 //-----plateau-----
     final int NB_CASES = 20;
-    int[][] cases(String plateau) { // Récupère indices + valeurs des nombres dans le string de plateau; fonction deux-en-un :)
-        int[][] resultat = new int[NB_CASES][2];
+    int[] indices_cases(String plateau) { // Récupère indices des nombres dans le string de plateau
+        int[] resultat = new int[NB_CASES];
         int cptCases = 0;
         for (int i = 0; i < length(plateau) - 1; i++) {
             final int actuel = charAt(plateau, i) - '0';
-            final int prochain = charAt(plateau, i+1) - '0';
+            final int prochain = charAt(plateau, i + 1) - '0';
             final boolean nb_un_chiffre = actuel == 0;
             final boolean nb_deux_chiffres = actuel >= 0 && actuel <= 9 && prochain >= 0 && prochain <= 9;
 
             if (nb_un_chiffre || nb_deux_chiffres) {
-                resultat[cptCases] = new int[]{i, -1}; // [0] = index, [1] = valeur (ici -1 en attendant les conditions juste en dessous)
+                resultat[cptCases] = i;
                 cptCases++; i++;
             }
-            if (nb_un_chiffre) {
-                resultat[cptCases][1] = prochain;
-            } else if (nb_deux_chiffres) {
-                resultat[cptCases][1] = (actuel * 10) + prochain;
-            }
         }
+        assertEquals(NB_CASES, cptCases);
         return resultat;
     }
 
