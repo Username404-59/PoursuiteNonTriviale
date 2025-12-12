@@ -82,4 +82,5 @@ class PoursuiteNonTriviale extends Program {
             + _contenu
             + substring(plateau, indices[_case]+2, length(plateau));
     }
+    // Exemple pour remplacer une case avec un bonus: println(remplacer(fichierTexte("ascii/plateau.txt"), 19, "B "));
 }
