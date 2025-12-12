@@ -76,6 +76,7 @@ class PoursuiteNonTriviale extends Program {
     void afficherMenu() {
         int saisie;
         do {
+            println(fichierTexte("ascii/PoursuiteNonTriviale.txt"));
             println("1.Jouer\n2.Aide\n3.Option\n4.Quitter");
             saisie = choixNombre(1, 4);
             if (saisie == 1) jouer();
