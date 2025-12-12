@@ -1,8 +1,9 @@
 import extensions.File;
+
 class PoursuiteNonTriviale extends Program {
     int choixNombre(int min, int max) {
         int saisie;
-        do{
+        do {
             print("Veuillez choisir un nombre entre "+min+" et "+max+" : ");
             saisie = readInt();
         } while (saisie < min || saisie > max);
@@ -11,23 +12,25 @@ class PoursuiteNonTriviale extends Program {
 
 //-----fonctions aide-----
 
-    void lireFichier(String cheminFichier){
+    void lireFichier(String cheminFichier) {
         File fichier = newFile(cheminFichier);
         while (ready(fichier)) {
             println(readLine(fichier));
         }
         String saisie = " ";
-        do{
-            saisie=readString();
-        }while(!equals(saisie,""));
+        do {
+            saisie = readString();
+        } while (!equals(saisie,""));
         aide();
     }
 
     void aide() {
         println("1.Cases\n2.Combat\n3.Bonus\n4.retour");
-        final int saisie = choixNombre(1, 4);
+
         final String pathCommun = "aide/aide ";
         final String[] fichiers = new String[] {"cases", "combat", "bonus"};
+
+        final int saisie = choixNombre(1, 4);
         if (saisie != 4) {
             lireFichier(pathCommun + fichiers[saisie - 1]);
         } else {
@@ -37,7 +40,7 @@ class PoursuiteNonTriviale extends Program {
 
 //-----fonctions Menu-----
 
-    void afficherMenu(){
+    void afficherMenu() {
         println("1.Jouer\n2.Aide\n3.Option");
         final int saisie = choixNombre(1, 3);
         //if (saisie == 1) jouer();
@@ -46,9 +49,7 @@ class PoursuiteNonTriviale extends Program {
 
 //-----algo principal-----
 
-    void algorithm(){
-        afficherMenu();
-    }
+    void algorithm() { afficherMenu(); }
 
 //-----plateau-----
     void remplacer(String plateau, int _case, String _contenu) {
