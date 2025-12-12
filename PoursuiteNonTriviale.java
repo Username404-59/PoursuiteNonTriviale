@@ -17,10 +17,10 @@ class PoursuiteNonTriviale extends Program {
         while (ready(fichier)) {
             println(readLine(fichier));
         }
-        String saisie = " ";
+        String saisie;
         do {
             saisie = readString();
-        } while (!equals(saisie,""));
+        } while (length(saisie) > 0);
         aide();
     }
 
