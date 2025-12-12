@@ -9,14 +9,19 @@ class PoursuiteNonTriviale extends Program {
         } while (saisie < min || saisie > max);
         return saisie;
     }
+    String fichierTexte(String cheminFichier) {
+        File fichier = newFile(cheminFichier);
+        String retour = "";
+        while (ready(fichier)) {
+            retour += readLine(fichier) + "\n";
+        }
+        return retour;
+    }
 
 //-----fonctions aide-----
 
     void lireFichier(String cheminFichier) {
-        File fichier = newFile(cheminFichier);
-        while (ready(fichier)) {
-            println(readLine(fichier));
-        }
+        println(fichierTexte(cheminFichier));
         String saisie;
         do {
             saisie = readString();
@@ -67,13 +72,14 @@ class PoursuiteNonTriviale extends Program {
                 cptCases++; i++;
             }
         }
-        assertEquals(NB_CASES, cptCases);
+        assertEquals(NB_CASES, cptCases); // Si c'est false soit il y a un problème, soit la fonction est utilisée après qu'on aie mis les cases bonus (on doit pas faire ça)
         return resultat;
     }
 
-    void remplacer(String plateau, int _case, String _contenu) {
-        // TODO Boucle sur plateau; quand on trouve un cas où plateau[i] + plateau[i+1] == _case (ou == "0"+_case si (_case <= 9)), on s'arrête et on garde l'index
-        // Ensuite on utilisera l'index pour remplacer avec _contenu
-        // EDIT: On peut utiliser la fonction cases() que j'ai faite au dessus
+    String remplacer(String plateau, int _case, String _contenu) {
+        final int[] indices = indices_cases(plateau);
+        return substring(plateau, 0, indices[_case])
+            + _contenu
+            + substring(plateau, indices[_case]+2, length(plateau));
     }
 }
