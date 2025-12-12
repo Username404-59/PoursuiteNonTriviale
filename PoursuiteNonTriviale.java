@@ -68,7 +68,7 @@ class PoursuiteNonTriviale extends Program {
             final boolean nb_deux_chiffres = actuel >= 0 && actuel <= 9 && prochain >= 0 && prochain <= 9;
 
             if (nb_un_chiffre || nb_deux_chiffres) {
-                resultat[cptCases] = i;
+                resultat[(nb_un_chiffre ? prochain : (actuel*10) + prochain)] = i;
                 cptCases++; i++;
             }
         }
