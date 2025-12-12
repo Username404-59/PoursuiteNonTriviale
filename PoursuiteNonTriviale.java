@@ -18,6 +18,34 @@ class PoursuiteNonTriviale extends Program {
         return retour;
     }
 
+//-----plateau-----
+    final int NB_CASES = 20;
+    int[] indices_cases(String plateau) { // Récupère indices des nombres dans le string de plateau
+        int[] resultat = new int[NB_CASES];
+        int cptCases = 0;
+        for (int i = 0; i < length(plateau) - 1; i++) {
+            final int actuel = charAt(plateau, i) - '0';
+            final int prochain = charAt(plateau, i + 1) - '0';
+            final boolean nb_un_chiffre = actuel == 0;
+            final boolean nb_deux_chiffres = actuel >= 0 && actuel <= 9 && prochain >= 0 && prochain <= 9;
+
+            if (nb_un_chiffre || nb_deux_chiffres) {
+                resultat[(nb_un_chiffre ? prochain : (actuel*10) + prochain)] = i;
+                cptCases++; i++;
+            }
+        }
+        assertEquals(NB_CASES, cptCases); // Si c'est false soit il y a un problème, soit la fonction est utilisée après qu'on aie mis les cases bonus (on doit pas faire ça)
+        return resultat;
+    }
+
+    String remplacer(String plateau, int _case, String _contenu) {
+        final int[] indices = indices_cases(plateau);
+        return substring(plateau, 0, indices[_case])
+                + _contenu
+                + substring(plateau, indices[_case]+2, length(plateau));
+    }
+    // Exemple pour remplacer une case avec un bonus: println(remplacer(fichierTexte("ascii/plateau.txt"), 19, "B "));
+
 //-----fonctions aide-----
 
     void lireFichier(String cheminFichier) {
@@ -46,41 +74,24 @@ class PoursuiteNonTriviale extends Program {
 //-----fonctions Menu-----
 
     void afficherMenu() {
-        println("1.Jouer\n2.Aide\n3.Option");
-        final int saisie = choixNombre(1, 3);
-        //if (saisie == 1) jouer();
-        if (saisie == 2) aide();
+        while (saisie != 4) {
+            println("1.Jouer\n2.Aide\n3.Option\n4.Quitter");
+            final int saisie = choixNombre(1, 4);
+            if (saisie == 1) jouer();
+            if (saisie == 2) aide();
+            // if (saisie == 3) options();
+        }
     }
 
 //-----algo principal-----
 
     void algorithm() { afficherMenu(); }
 
-//-----plateau-----
-    final int NB_CASES = 20;
-    int[] indices_cases(String plateau) { // Récupère indices des nombres dans le string de plateau
-        int[] resultat = new int[NB_CASES];
-        int cptCases = 0;
-        for (int i = 0; i < length(plateau) - 1; i++) {
-            final int actuel = charAt(plateau, i) - '0';
-            final int prochain = charAt(plateau, i + 1) - '0';
-            final boolean nb_un_chiffre = actuel == 0;
-            final boolean nb_deux_chiffres = actuel >= 0 && actuel <= 9 && prochain >= 0 && prochain <= 9;
-
-            if (nb_un_chiffre || nb_deux_chiffres) {
-                resultat[(nb_un_chiffre ? prochain : (actuel*10) + prochain)] = i;
-                cptCases++; i++;
-            }
+    void jouer() {
+        boolean fini = false;
+        while (!fini) {
+            // ...
+            fini = true;
         }
-        assertEquals(NB_CASES, cptCases); // Si c'est false soit il y a un problème, soit la fonction est utilisée après qu'on aie mis les cases bonus (on doit pas faire ça)
-        return resultat;
     }
-
-    String remplacer(String plateau, int _case, String _contenu) {
-        final int[] indices = indices_cases(plateau);
-        return substring(plateau, 0, indices[_case])
-            + _contenu
-            + substring(plateau, indices[_case]+2, length(plateau));
-    }
-    // Exemple pour remplacer une case avec un bonus: println(remplacer(fichierTexte("ascii/plateau.txt"), 19, "B "));
 }
