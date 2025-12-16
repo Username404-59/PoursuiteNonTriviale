@@ -48,8 +48,8 @@ class PoursuiteNonTriviale extends Program {
 
     String bonusAléatoires(String plateau) {
         final int[] indices = indices_cases(plateau);
-        for (int i = 0; i < length(indices); i++) {
-            remplacer(plateau, i, "B ");
+        for (int i = 0; i < 3; i++) {
+            remplacer(plateau, (int) (random() * 19), "B ");
         }
         return plateau;
     }
