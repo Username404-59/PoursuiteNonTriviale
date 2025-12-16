@@ -46,6 +46,14 @@ class PoursuiteNonTriviale extends Program {
     }
     // Exemple pour remplacer une case avec un bonus: println(remplacer(fichierTexte("ascii/plateau.txt"), 19, "B "));
 
+    String bonusAléatoires(String plateau) {
+        final int[] indices = indices_cases(plateau);
+        for (int i = 0; i < length(indices); i++) {
+            remplacer(plateau, i, "B ");
+        }
+        return plateau;
+    }
+
 //-----fonctions aide-----
 
     void lireFichier(String cheminFichier) {
