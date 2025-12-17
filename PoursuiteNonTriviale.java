@@ -17,6 +17,8 @@ class PoursuiteNonTriviale extends Program {
         }
         return retour;
     }
+    int charToInt(char c) { return c - '0'; }
+    boolean isSDigit(int c) { return c >= 0 && c <= 9; }
 
 //-----plateau-----
     final int NB_CASES = 20;
@@ -24,10 +26,10 @@ class PoursuiteNonTriviale extends Program {
         int[] resultat = new int[NB_CASES];
         int cptCases = 0;
         for (int i = 0; i < length(plateau) - 1; i++) {
-            final int actuel = charAt(plateau, i) - '0';
-            final int prochain = charAt(plateau, i + 1) - '0';
+            final int actuel = charToInt(charAt(plateau, i));
+            final int prochain = charToInt(charAt(plateau, i + 1));
             final boolean nb_un_chiffre = actuel == 0;
-            final boolean nb_deux_chiffres = actuel >= 0 && actuel <= 9 && prochain >= 0 && prochain <= 9;
+            final boolean nb_deux_chiffres = isSDigit(actuel) && isSDigit(prochain);
 
             if (nb_un_chiffre || nb_deux_chiffres) {
                 resultat[(nb_un_chiffre ? prochain : (actuel*10) + prochain)] = i;
@@ -126,15 +128,26 @@ class PoursuiteNonTriviale extends Program {
     }
 
     void jouer() {
+        boolean fini = false;
         int PV = 100;
         final String plateauOG = fichierTexte("ascii/plateau.txt");
-        String plateau = plateauOG;
+        final int[] indices = indices_cases(plateauOG);
+        String plateau = plateauOG; //bonusAléatoires(plateauOG);
 
-        for (int _case = 1; _case < 20 && PV > 0; _case++) {
-            // ...
-
-            // Dans le combat:
-            //final int dé = lancerDés();
+        int _case = 0;
+        while (!fini) {
+            _case += lancerDés();
+            if (PV <= 0 || _case > 19) {
+                fini = true;
+            } else {
+                char carac = charAt(plateau, indices[_case]);
+                if (isSDigit(charToInt(carac))) {
+                    // TODO Gérer le combat
+                }
+                //else if (carac == 'B') {
+                //... TODO Gérer les cases bonus
+                //}
+            }
         }
     }
 }
