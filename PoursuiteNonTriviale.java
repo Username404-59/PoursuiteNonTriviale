@@ -99,15 +99,18 @@ class PoursuiteNonTriviale extends Program {
 
     int lancerDés() {
         final String dés = "⚀⚁⚂⚃⚄⚅";
-        println("Lancer de dés en cours...");
+        println("Lancer de dés:\n");
 
-        final int dé = (int) (random() * 5);
+        int dé = (int) (random() * 5);
         println(
             "+---+\n" +
             "| " + charAt(dés, dé) + " |\n" +
             "+---+"
         );
-        return dé + 1;
+
+        dé++;
+        println("Vous avancez de "+dé+".");
+        return dé;
     }
 
     void jouer() {
