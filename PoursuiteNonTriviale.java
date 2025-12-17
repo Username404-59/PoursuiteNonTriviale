@@ -81,6 +81,46 @@ class PoursuiteNonTriviale extends Program {
         }
     }
 
+//-----fonctions Options--
+    int diff = 1;
+    boolean Bonus = true;
+    int Questions = 1;
+
+    void options() {
+        print("1.difficulté : "+diff+"\n2.cases bonus : "+TexteBonus(Bonus)+"\n3.types de questions : "+TexteQuestions(Questions));
+        int choix = choixNombre(1,3);
+        if (choix==1) {
+            diff = choixNombre(1,5);
+        } else if (choix==2) {
+            Bonus=!Bonus;
+        }else {
+            println("1 : Tous les types de questions\n2 : Seulement des questions de Maths\n3 : Seulement des questions de français");
+            Questions=choixNombre(1,3);
+        }
+    }
+
+    String TexteBonus(boolean Bonus){
+        String TxtBonus;
+        if (Bonus) {
+            TxtBonus="Oui";
+        }else {
+            TxtBonus="Non";
+        }
+        return TxtBonus;
+    }
+
+    String TexteQuestions(int Questions){
+        String txtQuestions;
+        if (Questions==1) {
+            txtQuestions="Toutes";
+        } else if (Questions==2) {
+            txtQuestions="Maths";
+        } else {
+            txtQuestions="Français";
+        }
+        return txtQuestions;
+    }
+
 //-----fonctions Menu-----
 
     void afficherMenu() {
@@ -91,7 +131,7 @@ class PoursuiteNonTriviale extends Program {
             saisie = choixNombre(1, 4);
             if (saisie == 1) jouer();
             if (saisie == 2) aide();
-            // if (saisie == 3) options();
+            if (saisie == 3) options();
         } while (saisie != 4);
     }
 
@@ -127,12 +167,21 @@ class PoursuiteNonTriviale extends Program {
         println("]");
     }
 
+    String[] questions = new String[]{
+        "Quel petit pays se situe entre la Suisse et l'Autriche?",
+        "Liechenstein"
+    };
+
+    int PV = 100;
     void jouer() {
         boolean fini = false;
-        int PV = 100;
+        int score = 0;
         final String plateauOG = fichierTexte("ascii/plateau.txt");
         final int[] indices = indices_cases(plateauOG);
-        String plateau = plateauOG; //bonusAléatoires(plateauOG);
+        String plateau = plateauOG;
+        if (Bonus) {
+            plateau = bonusAléatoires(plateauOG);
+        }
 
         int _case = 0;
         while (!fini) {
@@ -140,14 +189,77 @@ class PoursuiteNonTriviale extends Program {
             if (PV <= 0 || _case > 19) {
                 fini = true;
             } else {
-                char carac = charAt(plateau, indices[_case]);
+                final char carac = charAt(plateau, indices[_case]);
                 if (isSDigit(charToInt(carac))) {
-                    // TODO Gérer le combat
+                    boolean gagnéCombat = combat();
+                    if (gagnéCombat){
+                        score+=1;
+                        if (score==5){
+                            fini=true;
+                        }
+                    } else {
+                        _case-=2;
+                    }
                 }
                 //else if (carac == 'B') {
                 //... TODO Gérer les cases bonus
                 //}
             }
         }
+        PV = 100;
+    }
+
+    boolean combat () {
+        int PV_Monstre = 100;
+        boolean gagné;
+        println(fichierTexte("ascii/approche_monstre.txt"));
+        println(fichierTexte("ascii/gaster.txt"));
+        println(fichierTexte("ascii/menu_combat.txt"));
+        print("\n\n\n");
+
+        while (PV > 0 && PV_Monstre > 0) {
+            int choix = choixNombre(1, 4);
+            if (choix == 1) {
+                println(questions[0]);
+                String réponse = "";
+                while (PV > 0 && PV_Monstre > 0) {
+                    print("-->");
+                    réponse = readString();
+                    if (equals(réponse, questions[1])) {
+                        PV_Monstre -= 33;
+                        println("Points de vie du Monstre:");
+                        barreDeVie(PV_Monstre, 100);
+                    } else {
+                        PV -= 33;
+                        println("Points de vie du Joueur:");
+                        barreDeVie(PV, 100);
+                    }
+                }
+            } else if (choix==2) {
+                action();
+            } else if (choix==3) {
+                objet();
+            } else {
+                return false;
+            }
+        }
+        if (PV_Monstre<=0){
+            gagné = true;
+        } else  {
+            gagné = false;
+        }
+        return gagné;
+    }
+
+    void action () {
+        println("1.Regarder les statistiques");
+        int choix = choixNombre(1,1);
+        if (choix==1){
+            println("Points de vie de monstre"+PV);
+        }
+    }
+
+    void objet () {
+        println("");
     }
 }
