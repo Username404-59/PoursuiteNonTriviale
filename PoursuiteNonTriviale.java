@@ -113,11 +113,28 @@ class PoursuiteNonTriviale extends Program {
         return dé;
     }
 
+    void barreDeVie(int PV, int PV_MAX) {
+        print("[");
+        int i = 0;
+        for (; i < PV; i += 10) {
+            print("█");
+        }
+        for (; i < PV_MAX; i += 10) {
+            print("▒");
+        }
+        println("]");
+    }
+
     void jouer() {
-        boolean fini = false;
-        while (!fini) {
+        int PV = 100;
+        final String plateauOG = fichierTexte("ascii/plateau.txt");
+        String plateau = plateauOG;
+
+        for (int _case = 1; _case < 20 && PV > 0; _case++) {
             // ...
-            fini = true;
+
+            // Dans le combat:
+            //final int dé = lancerDés();
         }
     }
 }
