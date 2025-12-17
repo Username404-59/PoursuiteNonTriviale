@@ -1,8 +1,7 @@
-Dans ce jeu, il existe 4 types de cases : 
+Dans ce jeu, il existe 3 types de cases : 
 
-- La case vide, ne contenant que son numéro
+- La case monstre, ne contenant que son numéro, qui débutent un combat
 - La case joueur, sur laquelle un joueur se trouve, désignée par un 'X'
 - Les cases bonus, marquées par un 'B', qui vous donnent un vonus pour le prochain combat
-- Les cases monstre, avec un 'M', qui débutent un combat
 
 (apuyez sur entrée pour revenir en arrière)
