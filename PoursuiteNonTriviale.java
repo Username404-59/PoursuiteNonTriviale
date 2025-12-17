@@ -46,7 +46,7 @@ class PoursuiteNonTriviale extends Program {
                 + _contenu
                 + substring(plateau, indices[_case]+2, length(plateau));
     }
-    // Exemple pour remplacer une case avec un bonus: println(remplacer(fichierTexte("ascii/plateau.txt"), 19, "B "));
+    // Exemple pour remplacer une case avec un bonus: println(remplacer(fichierTexte("assets/ascii/plateau.txt"), 19, "B "));
 
     String bonusAléatoires(String plateau) {
         final int[] indices = indices_cases(plateau);
@@ -70,7 +70,7 @@ class PoursuiteNonTriviale extends Program {
     void aide() {
         println("1.Cases\n2.Combat\n3.Bonus\n4.retour");
 
-        final String pathCommun = "aide/aide ";
+        final String pathCommun = "assets/aide/aide ";
         final String[] fichiers = new String[] {"cases", "combat", "bonus"};
 
         final int saisie = choixNombre(1, 4);
@@ -126,7 +126,7 @@ class PoursuiteNonTriviale extends Program {
     void afficherMenu() {
         int saisie;
         do {
-            println(fichierTexte("ascii/PoursuiteNonTriviale.txt"));
+            println(fichierTexte("assets/ascii/PoursuiteNonTriviale.txt"));
             println("1.Jouer\n2.Aide\n3.Option\n4.Quitter");
             saisie = choixNombre(1, 4);
             if (saisie == 1) jouer();
@@ -167,16 +167,17 @@ class PoursuiteNonTriviale extends Program {
         println("]");
     }
 
-    String[] questions = new String[]{
-        "Quel petit pays se situe entre la Suisse et l'Autriche?",
-        "Liechenstein"
+    String[][] questions = new String[][]{
+        {"Quel petit pays se situe entre la Suisse et l'Autriche?", "Liechenstein"},
+        {"3*12", "36"},
+        {"", ""},
     };
 
     int PV = 100;
     void jouer() {
         boolean fini = false;
         int score = 0;
-        final String plateauOG = fichierTexte("ascii/plateau.txt");
+        final String plateauOG = fichierTexte("assets/ascii/plateau.txt");
         final int[] indices = indices_cases(plateauOG);
         String plateau = plateauOG;
         if (Bonus) {
@@ -206,23 +207,23 @@ class PoursuiteNonTriviale extends Program {
         PV = 100;
     }
 
-    boolean combat () {
+    boolean combat() {
         int PV_Monstre = 100;
         final int PV_MaxMstr = PV_Monstre;
 
         while (PV > 0 && PV_Monstre > 0) {
-            println(fichierTexte("ascii/approche_monstre.txt"));
+            println(fichierTexte("assets/ascii/approche_monstre.txt"));
             println(fichierTexte(monstreAleatoire()));
-
             barreDeVie(PV_Monstre, PV_MaxMstr);
-            println(fichierTexte("ascii/menu_combat.txt"));
+            println(fichierTexte("assets/ascii/menu_combat.txt"));
             print("\n\n\n");
 
             int choix = choixNombre(1, 4);
             if (choix == 1) {
-                println(questions[0]);
+                println(questions[0][0]);
+                print("-->");
                 String réponse = readString();
-                if (equals(réponse, questions[1])) {
+                if (equals(réponse, questions[0][1])) {
                     PV_Monstre -= 33;
                 } else {
                     PV -= 33;
@@ -232,22 +233,22 @@ class PoursuiteNonTriviale extends Program {
             } else if (choix==3) {
                 objet();
             } else {
-                return false;
+                return false; // La fuite fait comme si on avait perdu pour l'instant
             }
         }
         return PV_Monstre <= 0;
     }
 
-    String monstreAleatoire () {
+    String monstreAleatoire() {
         int monstre = (int)random();
         String[] monstres = new String[]{
-            "ascii/gaster.txt",
-            "ascii/wolf.txt"
-        }
+            "assets/ascii/gaster.txt",
+            "assets/ascii/wolf.txt"
+        };
         return monstres[monstre];
     }
 
-    void action () {
+    void action() {
         println("1.Regarder les statistiques");
         int choix = choixNombre(1,1);
         if (choix==1){
@@ -255,7 +256,7 @@ class PoursuiteNonTriviale extends Program {
         }
     }
 
-    void objet () {
+    void objet() {
         println("Il n'y a rien ici !");
     }
 }
