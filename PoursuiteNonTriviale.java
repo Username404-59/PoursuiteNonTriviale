@@ -193,10 +193,7 @@ class PoursuiteNonTriviale extends Program {
                 if (isSDigit(charToInt(carac))) {
                     boolean gagnéCombat = combat();
                     if (gagnéCombat){
-                        score+=1;
-                        if (score==5){
-                            fini=true;
-                        }
+                        score+=1; // TODO changer par le gain d'un objet
                     } else {
                         _case-=2;
                     }
@@ -211,29 +208,24 @@ class PoursuiteNonTriviale extends Program {
 
     boolean combat () {
         int PV_Monstre = 100;
-        boolean gagné;
-        println(fichierTexte("ascii/approche_monstre.txt"));
-        println(fichierTexte("ascii/gaster.txt"));
-        println(fichierTexte("ascii/menu_combat.txt"));
-        print("\n\n\n");
+        final int PV_MaxMstr = PV_Monstre;
 
         while (PV > 0 && PV_Monstre > 0) {
+            println(fichierTexte("ascii/approche_monstre.txt"));
+            println(fichierTexte(monstreAleatoire()));
+
+            barreDeVie(PV_Monstre, PV_MaxMstr);
+            println(fichierTexte("ascii/menu_combat.txt"));
+            print("\n\n\n");
+
             int choix = choixNombre(1, 4);
             if (choix == 1) {
                 println(questions[0]);
-                String réponse = "";
-                while (PV > 0 && PV_Monstre > 0) {
-                    print("-->");
-                    réponse = readString();
-                    if (equals(réponse, questions[1])) {
-                        PV_Monstre -= 33;
-                        println("Points de vie du Monstre:");
-                        barreDeVie(PV_Monstre, 100);
-                    } else {
-                        PV -= 33;
-                        println("Points de vie du Joueur:");
-                        barreDeVie(PV, 100);
-                    }
+                String réponse = readString();
+                if (equals(réponse, questions[1])) {
+                    PV_Monstre -= 33;
+                } else {
+                    PV -= 33;
                 }
             } else if (choix==2) {
                 action();
@@ -243,23 +235,27 @@ class PoursuiteNonTriviale extends Program {
                 return false;
             }
         }
-        if (PV_Monstre<=0){
-            gagné = true;
-        } else  {
-            gagné = false;
+        return PV_Monstre <= 0;
+    }
+
+    String monstreAleatoire () {
+        int monstre = (int)random();
+        String[] monstres = new String[]{
+            "ascii/gaster.txt",
+            "ascii/wolf.txt"
         }
-        return gagné;
+        return monstres[monstre];
     }
 
     void action () {
         println("1.Regarder les statistiques");
         int choix = choixNombre(1,1);
         if (choix==1){
-            println("Points de vie de monstre"+PV);
+            println("Points de vie de monstre : "+PV);
         }
     }
 
     void objet () {
-        println("");
+        println("Il n'y a rien ici !");
     }
 }

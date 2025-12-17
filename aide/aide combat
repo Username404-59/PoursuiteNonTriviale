@@ -4,10 +4,12 @@ Dans celui-ci, vous aurez plusieurs choix :
 
  - attaquer
  - agir
+ - objet
  - fuir
 
 La première option (attaquer) vous posera une question. Si vous y répondez correctement, la vie du monstre diminuera de vos points d'attaque-la défense du monstre.
-La seconde (agir), vous donnera un choix entre utiliser un objet ou regarder les statistiques du monstre. 
-La troisième (fuire), vous permettra de fuire le combat et de reculer de deux cases avec 1 chance sur 2 de réussite.
+La seconde (agir), vous donnera un choix entre utiliser un objet ou regarder les statistiques du monstre.
+La troisième (objet), vous permettra d'utiliser un objet si vous en avez. Vous en obtiendrez en gagnant un combat.
+La quatrième (fuire), vous permettra de fuire le combat et de reculer de deux cases avec 1 chance sur 2 de réussite.
 
 (appuyer sur entrée pour revenir en arrière)
