@@ -125,6 +125,7 @@ class PoursuiteNonTriviale extends Program {
     int lancerDés() {
         final String dés = "⚀⚁⚂⚃⚄⚅";
         println("Lancer de dés:\n");
+        sleep(2000);
 
         int dé = (int) (random() * 5);
         println(
@@ -134,7 +135,9 @@ class PoursuiteNonTriviale extends Program {
         );
 
         dé++;
+        sleep(1500);
         println("Vous avancez de "+dé+".");
+        sleep(1500);
         return dé;
     }
 
@@ -194,8 +197,8 @@ class PoursuiteNonTriviale extends Program {
         int PV_Monstre = 100;
         final int PV_MaxMstr = PV_Monstre;
 
+        println(fichierTexte("assets/ascii/approche_monstre.txt"));
         while (PV > 0 && PV_Monstre > 0) {
-            println(fichierTexte("assets/ascii/approche_monstre.txt"));
             println(fichierTexte(monstreAleatoire()));
             barreDeVie(PV_Monstre, PV_MaxMstr);
             println(fichierTexte("assets/ascii/menu_combat.txt"));
