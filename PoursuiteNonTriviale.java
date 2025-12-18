@@ -82,43 +82,26 @@ class PoursuiteNonTriviale extends Program {
     }
 
 //-----fonctions Options--
+    // TODO stocker les options dans un fichier, pas dans des variables
     int diff = 1;
     boolean Bonus = true;
     int Questions = 1;
 
     void options() {
-        print("1.difficulté : "+diff+"\n2.cases bonus : "+TexteBonus(Bonus)+"\n3.types de questions : "+TexteQuestions(Questions));
+        print("1.difficulté : "+diff+"\n2.cases bonus : "+ (Bonus ? "Oui" : "Non") +"\n3.types de questions : "+TexteQuestions(Questions));
         int choix = choixNombre(1,3);
         if (choix==1) {
             diff = choixNombre(1,5);
         } else if (choix==2) {
-            Bonus=!Bonus;
+            Bonus = !Bonus;
         }else {
             println("1 : Tous les types de questions\n2 : Seulement des questions de Maths\n3 : Seulement des questions de français");
             Questions=choixNombre(1,3);
         }
     }
 
-    String TexteBonus(boolean Bonus){
-        String TxtBonus;
-        if (Bonus) {
-            TxtBonus="Oui";
-        }else {
-            TxtBonus="Non";
-        }
-        return TxtBonus;
-    }
-
     String TexteQuestions(int Questions){
-        String txtQuestions;
-        if (Questions==1) {
-            txtQuestions="Toutes";
-        } else if (Questions==2) {
-            txtQuestions="Maths";
-        } else {
-            txtQuestions="Français";
-        }
-        return txtQuestions;
+        return new String[]{"Toutes", "Maths", "Français"}[Questions - 1];
     }
 
 //-----fonctions Menu-----
