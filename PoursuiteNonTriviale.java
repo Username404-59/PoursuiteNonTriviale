@@ -217,7 +217,7 @@ class PoursuiteNonTriviale extends Program {
             int choix = choixNombre(1, 4);
             if (choix == 1) {
                 println(questions[0][0]);
-                print("-->");
+                print("--> ");
                 String réponse = readString();
                 if (equals(réponse, questions[0][1])) {
                     PV_Monstre -= 33;
