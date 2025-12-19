@@ -36,7 +36,7 @@ class PoursuiteNonTriviale extends Program {
                 cptCases++; i++;
             }
         }
-        assertEquals(NB_CASES, cptCases); // Si c'est false soit il y a un problème, soit la fonction est utilisée après qu'on aie mis les cases bonus (on doit pas faire ça)
+        assertEquals(NB_CASES, cptCases); // Si c'est false soit il y a un problème, soit la fonction est utilisée après qu'on aie mis les cases bonus (on ne doit pas faire ça)
         return resultat;
     }
 
@@ -153,6 +153,7 @@ class PoursuiteNonTriviale extends Program {
         println("]");
     }
 
+    // TODO Remplacer avec un fichier CSV
     String[][] questions = new String[][]{
         {"Quel petit pays se situe entre la Suisse et l'Autriche?", "Liechenstein"},
         {"3*12", "36"},
@@ -226,12 +227,11 @@ class PoursuiteNonTriviale extends Program {
     }
 
     String monstreAleatoire() {
-        int monstre = (int)random();
         String[] monstres = new String[]{
             "assets/ascii/gaster.txt",
             "assets/ascii/wolf.txt"
         };
-        return monstres[monstre];
+        return monstres[(int)random(0, length(monstres) - 1)];
     }
 
     void action() {
