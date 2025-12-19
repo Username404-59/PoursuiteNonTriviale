@@ -204,6 +204,7 @@ class PoursuiteNonTriviale extends Program {
                 //}
             }
         }
+        println("Vous avez " + (_case > 19 ? "gagné" : "perdu") + " la partie.");
         PV = 100;
     }
 
