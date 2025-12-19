@@ -178,11 +178,11 @@ class PoursuiteNonTriviale extends Program {
                 _case += lancerDés();
             else
                 fuite = false;
-            println(remplacer(plateau, _case, "XX"));
-            sleep(1750);
             if (PV <= 0 || _case > 19) {
                 fini = true;
             } else {
+                println(remplacer(plateau, _case, "XX"));
+                sleep(1750);
                 final char carac = charAt(plateau, indices[_case]);
                 if (isSDigit(charToInt(carac))) {
                     boolean gagnéCombat = combat();
