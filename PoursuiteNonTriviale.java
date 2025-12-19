@@ -198,6 +198,7 @@ class PoursuiteNonTriviale extends Program {
                     } else {
                         if (PV <= 0) {
                             println("Perdu! Vous êtes mort.");
+                            fini = true;
                         } else {
                             fuite = true;
                             println("Vous êtes renvoyé 2 cases en arrière.");
