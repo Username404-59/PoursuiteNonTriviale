@@ -153,11 +153,16 @@ class PoursuiteNonTriviale extends Program {
         println("]");
     }
 
-    // TODO Remplacer avec un fichier CSV
+    // TODO Remplacer avec un fichier CSV, et mettre de meilleures questions
     String[][] questions = new String[][]{
         {"Quel petit pays se situe entre la Suisse et l'Autriche?", "Liechenstein"},
         {"3*12", "36"},
-        {"", ""},
+        {"7+5", "12"}, {"9-4", "5"}, {"6*8", "48"},
+        {"42/6", "7"}, {"15+27", "42"}, {"100-58", "42"},
+        {"9*9", "81"}, {"64/8", "8"}, {"5²", "25"},
+        {"12*4", "48"}, {"81/9", "9"}, {"3³", "27"},
+        {"14+28", "42"}, {"50/2", "25"}, {"10*7", "70"},
+        {"300*300", "90000"}, {"250*250", "62500"}, {"37*24", "888"}
     };
 
     int PV = 100;
