@@ -182,6 +182,7 @@ class PoursuiteNonTriviale extends Program {
             if (!fuite)
                 _case += lancerDés();
             else
+                if (_case < 0) PV = -1;
                 fuite = false;
             if (PV <= 0 || _case > 19) {
                 fini = true;
