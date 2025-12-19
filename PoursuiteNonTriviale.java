@@ -222,10 +222,11 @@ class PoursuiteNonTriviale extends Program {
 
             int choix = choixNombre(1, 4);
             if (choix == 1) {
-                println(questions[0][0]);
+                final String[] question = questionAleatoire();
+                println(question[0]);
                 print("--> ");
-                String réponse = readString();
-                if (equals(réponse, questions[0][1])) {
+                final String réponse = readString();
+                if (equals(réponse, question[1])) {
                     PV_Monstre -= 33;
                 } else {
                     PV -= 33;
@@ -247,6 +248,9 @@ class PoursuiteNonTriviale extends Program {
             "assets/ascii/wolf.txt"
         };
         return monstres[(int)random(0, length(monstres) - 1)];
+    }
+    String[] questionAleatoire() {
+        return questions[(int)random(0, length(questions) - 1)];
     }
 
     void action() {
