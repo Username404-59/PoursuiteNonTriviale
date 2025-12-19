@@ -83,7 +83,7 @@ class PoursuiteNonTriviale extends Program {
 //-----fonctions Options--
     // TODO stocker les options dans un fichier, pas dans des variables
     int diff = 1;
-    boolean Bonus = true;
+    boolean Bonus = false;
     int Questions = 1;
 
     void options() {
