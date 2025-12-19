@@ -12,9 +12,8 @@ class PoursuiteNonTriviale extends Program {
     String fichierTexte(String cheminFichier) {
         File fichier = newFile(cheminFichier);
         String retour = "";
-        while (ready(fichier)) {
+        while (ready(fichier))
             retour += readLine(fichier) + "\n";
-        }
         return retour;
     }
     int charToInt(char c) { return c - '0'; }
@@ -49,9 +48,8 @@ class PoursuiteNonTriviale extends Program {
 
     String bonusAléatoires(String plateau) {
         final int[] indices = indices_cases(plateau);
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++)
             plateau = remplacer(plateau, (int) (random() * 19), "B ");
-        }
         return plateau;
     }
 
@@ -143,12 +141,10 @@ class PoursuiteNonTriviale extends Program {
     void barreDeVie(int PV, int PV_MAX) {
         print("[");
         int i = 0;
-        for (; i < PV; i += 10) {
+        for (; i < PV; i += 10)
             print("█");
-        }
-        for (; i < PV_MAX; i += 10) {
+        for (; i < PV_MAX; i += 10)
             print("▒");
-        }
         println("]");
     }
 
