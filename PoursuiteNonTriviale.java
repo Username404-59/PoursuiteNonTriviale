@@ -5,7 +5,7 @@ class PoursuiteNonTriviale extends Program {
         int saisie;
         do {
             print("Veuillez choisir un nombre entre "+min+" et "+max+" : ");
-            saisie = readInt();
+            saisie = charToInt(readChar()); // Utilisé au lieu de readInt pour ne pas crash si l'utilisateur fait une erreur
         } while (saisie < min || saisie > max);
         return saisie;
     }
