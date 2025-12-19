@@ -198,7 +198,7 @@ class PoursuiteNonTriviale extends Program {
         int PV_Monstre = 100;
         final int PV_MaxMstr = PV_Monstre;
 
-        println(fichierTexte("assets/ascii/approche_monstre.txt"));
+        println(fichierTexte("assets/ascii/approche_figure.txt"));
         while (PV > 0 && PV_Monstre > 0) {
             println(fichierTexte(monstreAleatoire()));
             barreDeVie(PV_Monstre, PV_MaxMstr);
