@@ -51,7 +51,7 @@ class PoursuiteNonTriviale extends Program {
     String bonusAléatoires(String plateau) {
         final int[] indices = indices_cases(plateau);
         for (int i = 0; i < 3; i++) {
-            remplacer(plateau, (int) (random() * 19), "B ");
+            plateau = remplacer(plateau, (int) (random() * 19), "B ");
         }
         return plateau;
     }
@@ -88,7 +88,7 @@ class PoursuiteNonTriviale extends Program {
     int Questions = 1;
 
     void options() {
-        print("1.difficulté : "+diff+"\n2.cases bonus : "+ (Bonus ? "Oui" : "Non") +"\n3.types de questions : "+TexteQuestions(Questions));
+        print("1.difficulté : "+diff+"\n2.cases bonus : "+ (Bonus ? "Oui" : "Non") +"\n3.types de questions : "+ texteQuestions(Questions));
         int choix = choixNombre(1,3);
         if (choix==1) {
             diff = choixNombre(1,5);
@@ -100,8 +100,8 @@ class PoursuiteNonTriviale extends Program {
         }
     }
 
-    String TexteQuestions(int Questions){
-        return new String[]{"Toutes", "Maths", "Français"}[Questions - 1];
+    String texteQuestions(int question){
+        return new String[]{"Toutes", "Maths", "Français"}[question - 1];
     }
 
 //-----fonctions Menu-----
@@ -168,7 +168,6 @@ class PoursuiteNonTriviale extends Program {
     int PV = 100;
     void jouer() {
         boolean fini = false;
-        int score = 0;
         final String plateauOG = fichierTexte("assets/ascii/plateau.txt");
         final int[] indices = indices_cases(plateauOG);
         String plateau = plateauOG;
@@ -194,7 +193,7 @@ class PoursuiteNonTriviale extends Program {
                     boolean gagnéCombat = combat();
                     if (gagnéCombat){
                         println("Gagné!");
-                        score+=1; // TODO changer par le gain d'un objet
+                        // TODO Gérer le gain d'un objet etc
                     } else {
                         if (PV <= 0) {
                             println("Perdu! Vous êtes mort.");
@@ -202,13 +201,14 @@ class PoursuiteNonTriviale extends Program {
                         } else {
                             fuite = true;
                             println("Vous êtes renvoyé 2 cases en arrière.");
-                            _case-=2;
+                            _case -= 2;
                         }
                     }
                 }
-                //else if (carac == 'B') {
-                //... TODO Gérer les cases bonus
-                //}
+                else if (carac == 'B') {
+                    println("Case bonus! Vous ne combattez pas ce tour.");
+                    //... TODO Gérer d'autres effets de case bonus
+                }
             }
         }
         println("Vous avez " + (_case > 19 ? "gagné" : "perdu") + " la partie.");
@@ -243,9 +243,9 @@ class PoursuiteNonTriviale extends Program {
                     barreDeVie(PV, 100);
                 }
                 sleep(750);
-            } else if (choix==2) {
+            } else if (choix == 2) {
                 action();
-            } else if (choix==3) {
+            } else if (choix == 3) {
                 objet();
             } else {
                 return false; // La fuite fait comme si on avait perdu pour l'instant
@@ -268,7 +268,7 @@ class PoursuiteNonTriviale extends Program {
     void action() {
         println("1.Regarder les statistiques");
         int choix = choixNombre(1,1);
-        if (choix==1){
+        if (choix == 1){
             println("Points de vie de monstre : "+PV);
         }
     }
