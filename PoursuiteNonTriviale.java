@@ -113,8 +113,8 @@ class PoursuiteNonTriviale extends Program {
             println("1.Jouer\n2.Aide\n3.Option\n4.Quitter");
             saisie = choixNombre(1, 4);
             if (saisie == 1) jouer();
-            if (saisie == 2) aide();
-            if (saisie == 3) options();
+            else if (saisie == 2) aide();
+            else if (saisie == 3) options();
         } while (saisie != 4);
     }
 
@@ -172,10 +172,14 @@ class PoursuiteNonTriviale extends Program {
         }
 
         int _case = 0;
+        boolean fuite = false;
         while (!fini) {
-            _case += lancerDés();
+            if (!fuite)
+                _case += lancerDés();
+            else
+                fuite = false;
             println(remplacer(plateau, _case, "X "));
-            sleep(750);
+            sleep(1750);
             if (PV <= 0 || _case > 19) {
                 fini = true;
             } else {
@@ -189,6 +193,7 @@ class PoursuiteNonTriviale extends Program {
                         if (PV <= 0) {
                             println("Perdu! Vous êtes mort.");
                         } else {
+                            fuite = true;
                             println("Vous êtes renvoyé 2 cases en arrière.");
                             _case-=2;
                         }
