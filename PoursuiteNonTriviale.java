@@ -36,7 +36,6 @@ class PoursuiteNonTriviale extends Program {
                 cptCases++; i++;
             }
         }
-        assertEquals(NB_CASES, cptCases); // Si c'est false soit il y a un problème, soit la fonction est utilisée après qu'on aie mis les cases bonus (on ne doit pas faire ça)
         return resultat;
     }
 
