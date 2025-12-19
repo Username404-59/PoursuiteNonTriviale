@@ -174,6 +174,8 @@ class PoursuiteNonTriviale extends Program {
         int _case = 0;
         while (!fini) {
             _case += lancerDés();
+            println(remplacer(plateau, _case, "X "));
+            sleep(750);
             if (PV <= 0 || _case > 19) {
                 fini = true;
             } else {
@@ -181,9 +183,15 @@ class PoursuiteNonTriviale extends Program {
                 if (isSDigit(charToInt(carac))) {
                     boolean gagnéCombat = combat();
                     if (gagnéCombat){
+                        println("Gagné!");
                         score+=1; // TODO changer par le gain d'un objet
                     } else {
-                        _case-=2;
+                        if (PV <= 0) {
+                            println("Perdu! Vous êtes mort.");
+                        } else {
+                            println("Vous êtes renvoyé 2 cases en arrière.");
+                            _case-=2;
+                        }
                     }
                 }
                 //else if (carac == 'B') {
@@ -197,10 +205,11 @@ class PoursuiteNonTriviale extends Program {
     boolean combat() {
         int PV_Monstre = 100;
         final int PV_MaxMstr = PV_Monstre;
+        final String monstre = fichierTexte(monstreAleatoire());
 
         println(fichierTexte("assets/ascii/approche_figure.txt"));
         while (PV > 0 && PV_Monstre > 0) {
-            println(fichierTexte(monstreAleatoire()));
+            println(monstre);
             barreDeVie(PV_Monstre, PV_MaxMstr);
             println(fichierTexte("assets/ascii/menu_combat.txt"));
             print("\n\n\n");
