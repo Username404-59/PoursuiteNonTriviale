@@ -178,7 +178,7 @@ class PoursuiteNonTriviale extends Program {
                 _case += lancerDés();
             else
                 fuite = false;
-            println(remplacer(plateau, _case, "X "));
+            println(remplacer(plateau, _case, "XX"));
             sleep(1750);
             if (PV <= 0 || _case > 19) {
                 fini = true;
