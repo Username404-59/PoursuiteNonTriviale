@@ -232,11 +232,16 @@ class PoursuiteNonTriviale extends Program {
                 println(question[0]);
                 print("--> ");
                 final String réponse = readString();
+                // TODO Varier les dégats pris/reçus
                 if (equals(réponse, question[1])) {
+                    println("Bonne réponse! Le monstre perd 33PV");
                     PV_Monstre -= 33;
                 } else {
+                    println("Perdu! Vous perdez 33PV");
                     PV -= 33;
+                    barreDeVie(PV, 100);
                 }
+                sleep(750);
             } else if (choix==2) {
                 action();
             } else if (choix==3) {
