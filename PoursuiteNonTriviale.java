@@ -1,4 +1,5 @@
 import extensions.File;
+import extensions.CSVFile;
 
 class PoursuiteNonTriviale extends Program {
     int choixNombre(int min, int max) {
@@ -18,6 +19,16 @@ class PoursuiteNonTriviale extends Program {
     }
     int charToInt(char c) { return c - '0'; }
     boolean isSDigit(int c) { return c >= 0 && c <= 9; }
+    int strToInt(String str) {
+        final int taille = length(str);
+        int rang = 1;
+        int resultat = 0;
+        for (int i = taille - 1; i >= 0; i--) {
+            resultat += charToInt(charAt(str, i)) * rang;
+            rang = rang * 10;
+        }
+        return resultat;
+    }
 
 //-----plateau-----
     final int NB_CASES = 20;
@@ -82,10 +93,10 @@ class PoursuiteNonTriviale extends Program {
     // TODO stocker les options dans un fichier, pas dans des variables
     int diff = 1;
     boolean bonus = false;
-    int Questions = 1;
+    int typeQuestions = 1;
 
     void options() {
-        print("1.difficulté : "+diff+"\n2.cases bonus : "+ (bonus ? "Oui" : "Non") +"\n3.types de questions : "+ texteQuestions(Questions));
+        print("1.difficulté : "+diff+"\n2.cases bonus : "+ (bonus ? "Oui" : "Non") +"\n3.types de questions : "+ texteQuestions(typeQuestions));
         int choix = choixNombre(1,3);
         if (choix==1) {
             diff = choixNombre(1,5);
@@ -93,7 +104,7 @@ class PoursuiteNonTriviale extends Program {
             bonus = !bonus;
         }else {
             println("1 : Tous les types de questions\n2 : Seulement des questions de Maths\n3 : Seulement des questions de français");
-            Questions = choixNombre(1,3);
+            typeQuestions = choixNombre(1,3);
         }
     }
 
@@ -148,20 +159,12 @@ class PoursuiteNonTriviale extends Program {
                 print("▒");
             i += 10;
         }
-        println("]");
+        println("] " + PV + "/" + PV_MAX);
     }
 
-    // TODO Remplacer avec un fichier CSV, et mettre de meilleures questions
-    String[][] questions = new String[][]{
-        {"Quel petit pays se situe entre la Suisse et l'Autriche?", "Liechenstein"},
-        {"3*12", "36"},
-        {"7+5", "12"}, {"9-4", "5"}, {"6*8", "48"},
-        {"42/6", "7"}, {"15+27", "42"}, {"100-58", "42"},
-        {"9*9", "81"}, {"64/8", "8"}, {"5²", "25"},
-        {"12*4", "48"}, {"81/9", "9"}, {"3³", "27"},
-        {"14+28", "42"}, {"50/2", "25"}, {"10*7", "70"},
-        {"300*300", "90000"}, {"250*250", "62500"}, {"37*24", "888"}
-    };
+    // TODO Mettre de meilleures questions
+    CSVFile questions = loadCSV("assets/csv/questions.csv");
+    CSVFile monstres = loadCSV("assets/csv/monstres.csv");
 
     int PV = 100;
     void jouer() {
@@ -214,9 +217,10 @@ class PoursuiteNonTriviale extends Program {
     }
 
     boolean combat() {
-        int PV_Monstre = 100;
+        final String[] donnéesMonstre = liste_aléatoire(monstres);
+        final String monstre = fichierTexte("assets/ascii/" + donnéesMonstre[0] + ".txt");
+        int PV_Monstre = strToInt(donnéesMonstre[1]);
         final int PV_MaxMstr = PV_Monstre;
-        final String monstre = fichierTexte(monstreAleatoire());
 
         println(fichierTexte("assets/ascii/approche_figure.txt"));
         while (PV > 0 && PV_Monstre > 0) {
@@ -227,7 +231,7 @@ class PoursuiteNonTriviale extends Program {
 
             int choix = choixNombre(1, 4);
             if (choix == 1) {
-                final String[] question = questionAleatoire();
+                final String[] question = liste_aléatoire(questions);
                 println(question[0]);
                 print("--> ");
                 final String réponse = readString();
@@ -246,21 +250,20 @@ class PoursuiteNonTriviale extends Program {
             } else if (choix == 3) {
                 objet();
             } else {
-                return false; // La fuite fait comme si on avait perdu pour l'instant
+                return false;
             }
         }
         return PV_Monstre <= 0;
     }
 
-    String monstreAleatoire() {
-        String[] monstres = new String[]{
-            "assets/ascii/gaster.txt",
-            "assets/ascii/wolf.txt"
-        };
-        return monstres[(int)random(0, length(monstres) - 1)];
-    }
-    String[] questionAleatoire() {
-        return questions[(int)random(0, length(questions) - 1)];
+    String[] liste_aléatoire(CSVFile csv) {
+        final int r = (int)random(0, rowCount(csv) - 1);
+        final int taille = columnCount(csv);
+        String[] contenus = new String[taille];
+        for (int i = 0; i < taille; ++i) {
+            contenus[i] = getCell(csv, r, i);
+        }
+        return contenus;
     }
 
     void action() {
