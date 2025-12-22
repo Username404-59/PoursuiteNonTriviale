@@ -81,23 +81,23 @@ class PoursuiteNonTriviale extends Program {
 //-----fonctions Options--
     // TODO stocker les options dans un fichier, pas dans des variables
     int diff = 1;
-    boolean Bonus = false;
+    boolean bonus = false;
     int Questions = 1;
 
     void options() {
-        print("1.difficulté : "+diff+"\n2.cases bonus : "+ (Bonus ? "Oui" : "Non") +"\n3.types de questions : "+ texteQuestions(Questions));
+        print("1.difficulté : "+diff+"\n2.cases bonus : "+ (bonus ? "Oui" : "Non") +"\n3.types de questions : "+ texteQuestions(Questions));
         int choix = choixNombre(1,3);
         if (choix==1) {
             diff = choixNombre(1,5);
         } else if (choix==2) {
-            Bonus = !Bonus;
+            bonus = !bonus;
         }else {
             println("1 : Tous les types de questions\n2 : Seulement des questions de Maths\n3 : Seulement des questions de français");
-            Questions=choixNombre(1,3);
+            Questions = choixNombre(1,3);
         }
     }
 
-    String texteQuestions(int question){
+    String texteQuestions(int question) {
         return new String[]{"Toutes", "Maths", "Français"}[question - 1];
     }
 
@@ -141,10 +141,13 @@ class PoursuiteNonTriviale extends Program {
     void barreDeVie(int PV, int PV_MAX) {
         print("[");
         int i = 0;
-        for (; i < PV; i += 10)
-            print("█");
-        for (; i < PV_MAX; i += 10)
-            print("▒");
+        while (i < PV_MAX) {
+            if (i < PV)
+                print("█");
+            else
+                print("▒");
+            i += 10;
+        }
         println("]");
     }
 
@@ -166,7 +169,7 @@ class PoursuiteNonTriviale extends Program {
         final String plateauOG = fichierTexte("assets/ascii/plateau.txt");
         final int[] indices = indices_cases(plateauOG);
         String plateau = plateauOG;
-        if (Bonus) {
+        if (bonus) {
             plateau = bonusAléatoires(plateauOG);
         }
 
