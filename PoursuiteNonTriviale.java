@@ -10,12 +10,15 @@ class PoursuiteNonTriviale extends Program {
         } while (saisie < min || saisie > max);
         return saisie;
     }
-    String fichierTexte(String cheminFichier) {
+    String fichierTexte(String cheminFichier) { // Produit un String avec le contenu du fichier
         File fichier = newFile(cheminFichier);
         String retour = "";
         while (ready(fichier))
             retour += readLine(fichier) + "\n";
         return retour;
+    }
+    void test_fichierTexte(){
+        assertEquals("c",fichierTexte("assets/test.txt"));
     }
     int charToInt(char c) { return c - '0'; }
     boolean isSDigit(int c) { return c >= 0 && c <= 9; }
