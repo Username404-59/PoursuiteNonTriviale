@@ -17,9 +17,7 @@ class PoursuiteNonTriviale extends Program {
             retour += readLine(fichier) + "\n";
         return retour;
     }
-    void test_fichierTexte(){
-        assertEquals("c",fichierTexte("assets/test.txt"));
-    }
+
     int charToInt(char c) { return c - '0'; }
     boolean isSDigit(int c) { return c >= 0 && c <= 9; }
     int strToInt(String str) {
@@ -279,5 +277,10 @@ class PoursuiteNonTriviale extends Program {
 
     void objet() {
         println("Il n'y a rien ici !");
+    }
+
+//----- Tests -----
+    void test_fichierTexte(){
+        assertEquals("c\n",fichierTexte("assets/test.txt"));
     }
 }
