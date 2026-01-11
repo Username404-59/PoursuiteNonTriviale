@@ -59,7 +59,6 @@ class PoursuiteNonTriviale extends Program {
     // Exemple pour remplacer une case avec un bonus: println(remplacer(fichierTexte("assets/ascii/plateau.txt"), 19, "B "));
 
     String bonusAléatoires(String plateau) {
-        final int[] indices = indices_cases(plateau);
         for (int i = 0; i < 3; i++)
             plateau = remplacer(plateau, (int) (random() * 19), "B ");
         return plateau;
@@ -91,26 +90,22 @@ class PoursuiteNonTriviale extends Program {
     }
 
 //-----fonctions Options--
-    // TODO stocker les options dans un fichier, pas dans des variables
-    int diff = 1;
+    int difficulté = 1;
     boolean bonus = false;
-    int typeQuestions = 1;
+    final String[] typesQuestions = new String[]{"Toutes", "Maths", "Français"};
+    int typeSélectionné = 1;
 
     void options() {
-        print("1.difficulté : "+diff+"\n2.cases bonus : "+ (bonus ? "Oui" : "Non") +"\n3.types de questions : "+ texteQuestions(typeQuestions));
+        print("1.difficulté : "+ difficulté +"\n2.cases bonus : "+ (bonus ? "Oui" : "Non") +"\n3.types de questions : "+ typesQuestions[typeSélectionné - 1]);
         int choix = choixNombre(1,3);
         if (choix==1) {
-            diff = choixNombre(1,5);
+            difficulté = choixNombre(1,3);
         } else if (choix==2) {
             bonus = !bonus;
-        }else {
+        } else {
             println("1 : Tous les types de questions\n2 : Seulement des questions de Maths\n3 : Seulement des questions de français");
-            typeQuestions = choixNombre(1,3);
+            typeSélectionné = choixNombre(1,3);
         }
-    }
-
-    String texteQuestions(int question) {
-        return new String[]{"Toutes", "Maths", "Français"}[question - 1];
     }
 
 //-----fonctions Menu-----
@@ -196,6 +191,9 @@ class PoursuiteNonTriviale extends Program {
                     if (gagnéCombat){
                         println("Gagné!");
                         // TODO Gérer le gain d'un objet etc
+                        if (((int) random(1, 3)) == 3) { // Une chance sur 3 d'avoir un objet en gagnant
+
+                        }
                     } else {
                         if (PV <= 0) {
                             println("Perdu! Vous êtes mort.");
@@ -222,6 +220,8 @@ class PoursuiteNonTriviale extends Program {
         final String monstre = fichierTexte("assets/ascii/" + donnéesMonstre[0] + ".txt");
         int PV_Monstre = strToInt(donnéesMonstre[1]);
         final int PV_MaxMstr = PV_Monstre;
+        final int ATQ_Monstre = strToInt(donnéesMonstre[2]);
+        int ATQ_Joueur = 33;
 
         println(fichierTexte("assets/ascii/approche_figure.txt"));
         while (PV > 0 && PV_Monstre > 0) {
@@ -241,20 +241,20 @@ class PoursuiteNonTriviale extends Program {
                     println("Bonne réponse! Le monstre perd 33PV");
                     PV_Monstre -= 33;
                 } else {
-                    println("Perdu! Vous perdez 33PV");
-                    PV -= 33;
-                    barreDeVie(PV, 100);
+                    println("Perdu! Vous perdez "+(ATQ_Monstre * difficulté)+"PV");
+                    PV -= ATQ_Monstre;
+                    barreDeVie(PV, 100); // Note: il n'y a pas vraiment de PVs max pour le joueur, 100 est simplement la valeur de base
                 }
                 sleep(750);
             } else if (choix == 2) {
-                action();
+                action(PV_Monstre, PV_MaxMstr, ATQ_Monstre);
             } else if (choix == 3) {
-                objet();
+                println("Il n'y a rien ici !");
             } else {
-                return false;
+                return false; // Fuite -> combat perdu
             }
         }
-        return PV_Monstre <= 0;
+        return PV_Monstre <= 0; // Issue du combat
     }
 
     String[] liste_aléatoire(CSVFile csv) {
@@ -267,16 +267,15 @@ class PoursuiteNonTriviale extends Program {
         return contenus;
     }
 
-    void action() {
+    void action(int p, int pmax, int atq) {
         println("1.Regarder les statistiques");
         int choix = choixNombre(1,1);
         if (choix == 1){
-            println("Points de vie de monstre : "+PV);
+            println("Points de vie actuels du monstre : "+p);
+            println("Points de vie maximum du monstre : "+pmax);
+            println("Points d'attaque du monstre : "+atq);
         }
-    }
-
-    void objet() {
-        println("Il n'y a rien ici !");
+        sleep(3000);
     }
 
 //----- Tests -----
