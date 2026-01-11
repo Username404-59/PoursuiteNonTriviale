@@ -93,10 +93,10 @@ class PoursuiteNonTriviale extends Program {
     int difficulté = 1;
     boolean bonus = false;
     final String[] typesQuestions = new String[]{"Toutes", "Maths", "Culture générale"};
-    int typeSélectionné = 1;
+    int typeSélectionné = 0;
 
     void options() {
-        print("1.difficulté : "+ difficulté +"\n2.cases bonus : "+ (bonus ? "Oui" : "Non") +"\n3.types de questions : "+ typesQuestions[typeSélectionné - 1]);
+        print("1.difficulté : "+ difficulté +"\n2.cases bonus : "+ (bonus ? "Oui" : "Non") +"\n3.types de questions : "+ typesQuestions[typeSélectionné]);
         int choix = choixNombre(1,3);
         if (choix==1) {
             difficulté = choixNombre(1,3);
@@ -104,7 +104,7 @@ class PoursuiteNonTriviale extends Program {
             bonus = !bonus;
         } else {
             println("1 : Tous les types de questions\n2 : Seulement des questions de Maths\n3 : Seulement des questions de culture générale");
-            typeSélectionné = choixNombre(1,3);
+            typeSélectionné = choixNombre(1,3) - 1;
         }
     }
 
@@ -232,7 +232,7 @@ class PoursuiteNonTriviale extends Program {
 
             int choix = choixNombre(1, 4);
             if (choix == 1) {
-                final String[] question = liste_aléatoire(questions);
+                final String[] question = (typeSélectionné == 0 ? liste_aléatoire(questions) : question_aléatoire_type(questions, typeSélectionné));
                 println(question[0]);
                 print("--> ");
                 final String réponse = readString();
@@ -281,14 +281,28 @@ class PoursuiteNonTriviale extends Program {
         return PV_Monstre <= 0; // Issue du combat
     }
 
-    String[] liste_aléatoire(CSVFile csv) {
-        final int r = (int)random(0, rowCount(csv) - 1);
+//-----Fonctions de sélection dans les fichiers CSV-----
+    String[] liste(CSVFile csv, int r) {
         final int taille = columnCount(csv);
         String[] contenus = new String[taille];
         for (int i = 0; i < taille; ++i) {
             contenus[i] = getCell(csv, r, i);
         }
         return contenus;
+    }
+
+    int random_csv(CSVFile csv) {
+        return (int) random(0, rowCount(csv) - 1);
+    }
+    String[] liste_aléatoire(CSVFile csv) {
+        return liste(csv, random_csv(csv));
+    }
+    String[] question_aléatoire_type(CSVFile csv, int typeQuestion) {
+        int r;
+        do {
+            r = random_csv(csv);
+        } while (strToInt(getCell(csv, r, 2)) != typeQuestion);
+        return liste(csv, r);
     }
 
     void action(int p, int pmax, int atq) {
