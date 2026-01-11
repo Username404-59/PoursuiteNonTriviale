@@ -92,7 +92,7 @@ class PoursuiteNonTriviale extends Program {
 //-----fonctions Options--
     int difficulté = 1;
     boolean bonus = false;
-    final String[] typesQuestions = new String[]{"Toutes", "Maths", "Français"};
+    final String[] typesQuestions = new String[]{"Toutes", "Maths", "Culture générale"};
     int typeSélectionné = 1;
 
     void options() {
@@ -103,7 +103,7 @@ class PoursuiteNonTriviale extends Program {
         } else if (choix==2) {
             bonus = !bonus;
         } else {
-            println("1 : Tous les types de questions\n2 : Seulement des questions de Maths\n3 : Seulement des questions de français");
+            println("1 : Tous les types de questions\n2 : Seulement des questions de Maths\n3 : Seulement des questions de culture générale");
             typeSélectionné = choixNombre(1,3);
         }
     }
