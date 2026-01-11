@@ -264,9 +264,9 @@ class PoursuiteNonTriviale extends Program {
                         final int longueur = length(selection[1]);
                         final int valeur = strToInt(substring(selection[1], 0, longueur-3));
                         final String suffixe = substring(selection[1], longueur-3, longueur);
-                        if (suffixe == "PVS") {
+                        if (equals(suffixe, "PVS")) {
                             PV += valeur;
-                        } else if (suffixe == "ATQ") {
+                        } else if (equals(suffixe, "ATQ")) {
                             ATQ_Joueur += valeur;
                         };
                         println("Vous gagnez +"+selection[1]+" !");
