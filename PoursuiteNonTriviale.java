@@ -158,9 +158,9 @@ class PoursuiteNonTriviale extends Program {
         println("] " + PV + "/" + PV_MAX);
     }
 
-    // TODO Mettre de meilleures questions
     CSVFile questions = loadCSV("assets/csv/questions.csv");
     CSVFile monstres = loadCSV("assets/csv/monstres.csv");
+    CSVFile objets = loadCSV("assets/csv/objets.csv");
 
     int PV = 100;
     void jouer() {
@@ -187,12 +187,11 @@ class PoursuiteNonTriviale extends Program {
                 sleep(1750);
                 final char carac = charAt(plateau, indices[_case]);
                 if (isSDigit(charToInt(carac))) {
-                    boolean gagnéCombat = combat();
+                    final boolean gagnéCombat = combat();
                     if (gagnéCombat){
                         println("Gagné!");
-                        // TODO Gérer le gain d'un objet etc
                         if (((int) random(1, 3)) == 3) { // Une chance sur 3 d'avoir un objet en gagnant
-
+                            gainObjet();
                         }
                     } else {
                         if (PV <= 0) {
@@ -207,7 +206,8 @@ class PoursuiteNonTriviale extends Program {
                 }
                 else if (carac == 'B') {
                     println("Case bonus! Vous ne combattez pas ce tour.");
-                    //... TODO Gérer d'autres effets de case bonus
+                    gainObjet();
+                    sleep(1500);
                 }
             }
         }
@@ -220,7 +220,7 @@ class PoursuiteNonTriviale extends Program {
         final String monstre = fichierTexte("assets/ascii/" + donnéesMonstre[0] + ".txt");
         int PV_Monstre = strToInt(donnéesMonstre[1]);
         final int PV_MaxMstr = PV_Monstre;
-        final int ATQ_Monstre = strToInt(donnéesMonstre[2]);
+        final int ATQ_Monstre = strToInt(donnéesMonstre[2]) * difficulté;
         int ATQ_Joueur = 33;
 
         println(fichierTexte("assets/ascii/approche_figure.txt"));
@@ -236,12 +236,11 @@ class PoursuiteNonTriviale extends Program {
                 println(question[0]);
                 print("--> ");
                 final String réponse = readString();
-                // TODO Varier les dégats pris/reçus
                 if (equals(réponse, question[1])) {
                     println("Bonne réponse! Le monstre perd 33PV");
                     PV_Monstre -= 33;
                 } else {
-                    println("Perdu! Vous perdez "+(ATQ_Monstre * difficulté)+"PV");
+                    println("Perdu! Vous perdez "+ATQ_Monstre+"PV");
                     PV -= ATQ_Monstre;
                     barreDeVie(PV, 100); // Note: il n'y a pas vraiment de PVs max pour le joueur, 100 est simplement la valeur de base
                 }
@@ -249,7 +248,32 @@ class PoursuiteNonTriviale extends Program {
             } else if (choix == 2) {
                 action(PV_Monstre, PV_MaxMstr, ATQ_Monstre);
             } else if (choix == 3) {
-                println("Il n'y a rien ici !");
+                if (indice_inventaire == -1) {
+                    println("Vous n'avez pas d'objets!");
+                    sleep(3000);
+                } else {
+                    for (int i = 0; i < indice_inventaire; i++) {
+                        final String nom_objet = inventaire[i][0];
+                        final String stat_objet = inventaire[i][1];
+                        println((i+1)+". "+nom_objet+" (+"+stat_objet+")");
+                    }
+                    println(indice_inventaire+1+". retour");
+                    final int choixObjet = choixNombre(1, indice_inventaire+2);
+                    if (choixObjet < indice_inventaire+1) {
+                        final String[] selection = inventaire[indice_inventaire-1];
+                        final int longueur = length(selection[1]);
+                        final int valeur = strToInt(substring(selection[1], 0, longueur-3));
+                        final String suffixe = substring(selection[1], longueur-3, longueur);
+                        if (suffixe == "PVS") {
+                            PV += valeur;
+                        } else if (suffixe == "ATQ") {
+                            ATQ_Joueur += valeur;
+                        };
+                        println("Vous gagnez +"+selection[1]+" !");
+                        inventaire[indice_inventaire-1] = null; indice_inventaire--; // On retire l'objet de l'inventaire
+                        sleep(3000);
+                    };
+                }
             } else {
                 return false; // Fuite -> combat perdu
             }
@@ -276,6 +300,15 @@ class PoursuiteNonTriviale extends Program {
             println("Points d'attaque du monstre : "+atq);
         }
         sleep(3000);
+    }
+
+    String[][] inventaire = new String[2][20]; // Il y a 20 cases, l'inventaire ne devrait pas excéder 20 objets
+    int indice_inventaire = -1;
+    void gainObjet() {
+        if (indice_inventaire == -1) indice_inventaire++;
+        inventaire[indice_inventaire] = liste_aléatoire(objets);
+        println("Vous gagnez un objet: "+inventaire[indice_inventaire][0]+".");
+        indice_inventaire++;
     }
 
 //----- Tests -----
