@@ -261,15 +261,13 @@ class PoursuiteNonTriviale extends Program {
                     final int choixObjet = choixNombre(1, indice_inventaire+2);
                     if (choixObjet < indice_inventaire+1) {
                         final String[] selection = inventaire[indice_inventaire-1];
-                        final int longueur = length(selection[1]);
-                        final int valeur = strToInt(substring(selection[1], 0, longueur-3));
-                        final String suffixe = substring(selection[1], longueur-3, longueur);
-                        if (equals(suffixe, "PVS")) {
+                        final int valeur = strToInt(selection[1]);
+                        if (equals(selection[2], "PVS")) {
                             PV += valeur;
-                        } else if (equals(suffixe, "ATQ")) {
+                        } else if (equals(selection[2], "ATQ")) {
                             ATQ_Joueur += valeur;
                         };
-                        println("Vous gagnez +"+selection[1]+" !");
+                        println("Vous gagnez +"+selection[1]+selection[2]+" !");
                         inventaire[indice_inventaire-1] = null; indice_inventaire--; // On retire l'objet de l'inventaire
                         sleep(3000);
                     };
