@@ -237,8 +237,8 @@ class PoursuiteNonTriviale extends Program {
                 print("--> ");
                 final String réponse = readString();
                 if (equals(réponse, question[1])) {
-                    println("Bonne réponse! Le monstre perd 33PV");
-                    PV_Monstre -= 33;
+                    println("Bonne réponse! Le monstre perd "+ATQ_Joueur+"PV");
+                    PV_Monstre -= ATQ_Joueur;
                 } else {
                     println("Perdu! Vous perdez "+ATQ_Monstre+"PV");
                     PV -= ATQ_Monstre;
