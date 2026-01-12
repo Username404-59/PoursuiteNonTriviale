@@ -325,7 +325,24 @@ class PoursuiteNonTriviale extends Program {
     }
 
 //----- Tests -----
-    void test_fichierTexte(){
+    void test_fichierTexte() {
         assertEquals("c\n",fichierTexte("assets/test.txt"));
+    }
+
+    void test_isSDigit() {
+        assertEquals(true, isSDigit(9));
+        assertEquals(false, isSDigit(99));
+    }
+
+    void test_charToInt() {
+        assertEquals(9, charToInt('9'));
+    }
+
+    void test_liste() {
+        final String[] gaster = new String[] {"gaster","133","33"};
+        final String[] liste_csv = liste(monstres, 0);
+        for (int i = 0; i < length(liste_csv); i++) {
+            assertEquals(gaster[i], liste_csv[i]);
+        }
     }
 }
