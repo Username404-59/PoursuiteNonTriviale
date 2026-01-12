@@ -96,7 +96,7 @@ class PoursuiteNonTriviale extends Program {
     int typeSélectionné = 0;
 
     void options() {
-        print("1.difficulté : "+ difficulté +"\n2.cases bonus : "+ (bonus ? "Oui" : "Non") +"\n3.types de questions : "+ typesQuestions[typeSélectionné]);
+        println("1.difficulté : "+ difficulté +"\n2.cases bonus : "+ (bonus ? "Oui" : "Non") +"\n3.types de questions : "+ typesQuestions[typeSélectionné]);
         int choix = choixNombre(1,3);
         if (choix==1) {
             difficulté = choixNombre(1,3);
