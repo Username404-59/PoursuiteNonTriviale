@@ -250,7 +250,7 @@ class PoursuiteNonTriviale extends Program {
             } else if (choix == 3) {
                 if (indice_inventaire == 0) {
                     println("Vous n'avez pas d'objets!");
-                    sleep(3000);
+                    sleep(2000);
                 } else {
                     for (int i = 0; i < indice_inventaire; i++) {
                         final String nom_objet = inventaire[i][0];
