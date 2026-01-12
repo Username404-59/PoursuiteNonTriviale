@@ -248,7 +248,7 @@ class PoursuiteNonTriviale extends Program {
             } else if (choix == 2) {
                 action(PV_Monstre, PV_MaxMstr, ATQ_Monstre);
             } else if (choix == 3) {
-                if (indice_inventaire == -1) {
+                if (indice_inventaire == 0) {
                     println("Vous n'avez pas d'objets!");
                     sleep(3000);
                 } else {
@@ -317,9 +317,8 @@ class PoursuiteNonTriviale extends Program {
     }
 
     String[][] inventaire = new String[2][20]; // Il y a 20 cases, l'inventaire ne devrait pas excéder 20 objets
-    int indice_inventaire = -1; // Indice du dernier objet + 1
+    int indice_inventaire = 0; // Indice du dernier objet + 1
     void gainObjet() {
-        if (indice_inventaire == -1) indice_inventaire++;
         inventaire[indice_inventaire] = liste_aléatoire(objets);
         println("Vous gagnez un objet: "+inventaire[indice_inventaire][0]+".");
         indice_inventaire++;
