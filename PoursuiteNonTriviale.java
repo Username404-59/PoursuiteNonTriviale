@@ -306,18 +306,18 @@ class PoursuiteNonTriviale extends Program {
     }
 
     void action(int p, int pmax, int atq) {
-        println("1.Regarder les statistiques");
-        int choix = choixNombre(1,1);
+        println("1.Regarder les statistiques\n2.retour");
+        int choix = choixNombre(1,2);
         if (choix == 1){
             println("Points de vie actuels du monstre : "+p);
             println("Points de vie maximum du monstre : "+pmax);
             println("Points d'attaque du monstre : "+atq);
+            sleep(3000);
         }
-        sleep(3000);
     }
 
     String[][] inventaire = new String[2][20]; // Il y a 20 cases, l'inventaire ne devrait pas excéder 20 objets
-    int indice_inventaire = -1;
+    int indice_inventaire = -1; // Indice du dernier objet + 1
     void gainObjet() {
         if (indice_inventaire == -1) indice_inventaire++;
         inventaire[indice_inventaire] = liste_aléatoire(objets);
